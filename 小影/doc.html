@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>分镜稿 ShotScript · 产品说明文档</title>
+<style>
+  :root{
+    --ink:#14151A;
+    --ink2:#3E4150;
+    --sub:#5F6478;
+    --line:#E4E6EE;
+    --soft:#F4F5F9;
+    --accent:#5A46E8;
+    --accent-soft:#EFECFF;
+    --blue:#2F7BD8;
+    --warn:#B07814;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:#E9EAEF;
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","HarmonyOS Sans SC","Segoe UI",Inter,sans-serif;
+    color:var(--ink);-webkit-font-smoothing:antialiased;
+    font-size:13px;line-height:1.75;
+  }
+  .page{
+    width:210mm;min-height:297mm;background:#fff;margin:24px auto;padding:16mm 17mm 14mm;
+    box-shadow:0 6px 30px rgba(20,22,40,.12);position:relative;overflow:hidden;
+  }
+  .page + .page{page-break-before:always;}
+  .run-head{
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:9.5px;color:#9AA0B2;letter-spacing:.06em;text-transform:uppercase;
+    border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:18px;
+  }
+  .run-head b{color:var(--accent);letter-spacing:.08em;font-weight:600;}
+  .pno{position:absolute;right:17mm;bottom:9mm;font-size:9.5px;color:#A9AEBE;letter-spacing:.05em;}
+  h1{font-size:31px;line-height:1.2;letter-spacing:-.02em;font-weight:700;}
+  .lead{font-size:13.5px;color:var(--sub);line-height:1.75;margin-top:10px;}
+  .kicker{
+    display:inline-flex;align-items:center;gap:7px;font-size:10px;letter-spacing:.12em;
+    color:var(--accent);border:1px solid #DCD4FF;background:var(--accent-soft);
+    padding:4px 10px;border-radius:99px;margin-bottom:14px;
+  }
+  .kicker i{width:5px;height:5px;border-radius:50%;background:var(--accent);}
+  .meta-row{display:flex;gap:26px;margin-top:12px;padding-top:10px;border-top:1px solid var(--line);}
+  .meta-row div{font-size:10.5px;color:#9AA0B2;}
+  .meta-row div b{display:block;font-size:11.5px;color:var(--ink2);font-weight:600;margin-top:2px;}
+
+  h2{
+    font-size:15px;font-weight:700;letter-spacing:-.01em;margin:18px 0 9px;
+    display:flex;align-items:center;gap:9px;
+  }
+  h2 .n{
+    font-size:11px;width:22px;height:22px;border-radius:7px;background:var(--accent);color:#fff;
+    display:grid;place-items:center;font-weight:600;flex:none;
+  }
+  h2 small{font-weight:400;font-size:10.5px;color:#9AA0B2;letter-spacing:.02em;margin-left:2px;}
+  h3{font-size:12px;font-weight:600;color:var(--ink2);margin:14px 0 6px;}
+  p{font-size:11.5px;line-height:1.72;color:var(--ink2);}
+  p.small{font-size:11px;color:var(--sub);}
+  .hl{background:linear-gradient(180deg,transparent 62%,#E7E2FF 62%);font-weight:600;color:var(--ink);}
+
+  /* 一句话 */
+  .oneline{
+    border:1px solid #D9D2FF;background:linear-gradient(180deg,#F6F3FF,#FBFAFF);
+    border-radius:12px;padding:14px 16px;font-size:13px;line-height:1.9;color:#2A2740;
+  }
+  .oneline b{color:var(--accent);}
+  .oneline .tag{font-size:9.5px;color:#7A6FCF;letter-spacing:.1em;display:block;margin-bottom:6px;}
+
+  /* 人物卡 */
+  .person{
+    display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;
+  }
+  .pcard{
+    border:1px solid var(--line);border-radius:11px;padding:10px 13px;background:#fff;
+  }
+  .pcard .pt{font-size:9.5px;color:#9AA0B2;letter-spacing:.08em;margin-bottom:4px;}
+  .pcard .pv{font-size:11.5px;color:var(--ink2);line-height:1.7;}
+  .pcard.wide{grid-column:1/-1;background:var(--soft);border-color:#EDEEF5;}
+
+  /* 问答列表 */
+  .qa{margin-top:6px;}
+  .qa .row{display:grid;grid-template-columns:74px 1fr;gap:10px;padding:5px 0;border-bottom:1px dashed #ECEDF3;}
+  .qa .row:last-child{border-bottom:none;}
+  .qa .q{font-size:11px;color:#9AA0B2;letter-spacing:.02em;}
+  .qa .a{font-size:11.5px;color:var(--ink2);line-height:1.75;}
+
+  /* flow */
+  .flow{display:flex;align-items:stretch;gap:0;margin:12px 0 6px;}
+  .fstep{
+    flex:1;border:1px solid var(--line);border-radius:10px;padding:10px 10px 9px;background:#fff;
+    position:relative;
+  }
+  .fstep + .fstep{margin-left:16px;}
+  .fstep:not(:last-child)::after{
+    content:"›";position:absolute;right:-13px;top:50%;transform:translateY(-50%);
+    color:#C0C4D4;font-size:14px;
+  }
+  .fstep .fi{font-size:9px;color:var(--accent);letter-spacing:.08em;margin-bottom:3px;}
+  .fstep .ft{font-size:11.5px;font-weight:600;margin-bottom:3px;}
+  .fstep .fd{font-size:9.5px;color:var(--sub);line-height:1.55;}
+
+  /* table */
+  table{width:100%;border-collapse:collapse;margin-top:8px;}
+  th,td{
+    text-align:left;font-size:10.5px;line-height:1.65;padding:7px 9px;vertical-align:top;
+    border-bottom:1px solid var(--line);
+  }
+  th{font-size:9.5px;color:#8A90A4;letter-spacing:.06em;background:var(--soft);font-weight:600;}
+  td b{color:var(--ink);font-weight:600;}
+  td.k{width:52px;color:var(--accent);font-weight:600;font-size:10px;letter-spacing:.02em;}
+
+  /* 判断列表 */
+  .judge{display:flex;flex-direction:column;gap:7px;margin-top:4px;}
+  .judge .j{display:grid;grid-template-columns:18px 1fr;gap:8px;font-size:11.5px;line-height:1.7;color:var(--ink2);}
+  .judge .j i{
+    font-style:normal;width:16px;height:16px;border-radius:5px;background:var(--accent-soft);
+    color:var(--accent);font-size:9px;display:grid;place-items:center;margin-top:4px;
+  }
+  .no-list{margin-top:4px;}
+  .no-item{display:grid;grid-template-columns:96px 1fr;gap:10px;padding:5px 0;border-bottom:1px dashed #ECEDF3;font-size:11px;}
+  .no-item .n1{color:var(--ink);font-weight:600;}
+  .no-item .n2{color:var(--sub);line-height:1.7;}
+
+  .riskbox{
+    border-left:3px solid var(--warn);background:#FDF9F0;border-radius:0 8px 8px 0;
+    padding:9px 13px;font-size:11px;color:#6B5317;line-height:1.75;margin-top:8px;
+  }
+  .riskbox b{color:#8A6100;}
+
+  .quote{
+    border-left:3px solid var(--accent);padding:2px 0 2px 12px;margin:10px 0;
+    font-size:12px;color:#33344A;line-height:1.85;
+  }
+  .quote span{display:block;font-size:9.5px;color:#A0A5B6;margin-top:5px;letter-spacing:.04em;}
+
+  .page.dense{padding:13mm 16mm 12mm;}
+  .page.dense h2{margin:13px 0 7px;}
+  .page.dense p{font-size:11px;line-height:1.66;}
+  .page.dense .qa .a{font-size:11px;line-height:1.68;}
+  .page.dense .no-item .n2{font-size:10.5px;line-height:1.62;}
+  .page.dense table th,.page.dense table td{font-size:10px;padding:6px 8px;}
+  .page.dense h3{margin:11px 0 4px;}
+  .page.dense .riskbox{padding:7px 12px;font-size:10.5px;}
+  .page.dense .pcard{padding:9px 12px;}
+  .page.dense .judge .j{font-size:11px;}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .footline{
+    margin-top:14px;border-top:1px solid var(--line);padding-top:8px;
+    font-size:9.5px;color:#A6ABB9;line-height:1.6;
+  }
+
+  @media print{
+    body{background:#fff;}
+    .page{margin:0;box-shadow:none;width:auto;min-height:auto;padding:12mm 15mm;}
+    .page + .page{page-break-before:always;break-before:page;}
+    @page{size:A4;margin:0;}
+  }
+  @media screen and (max-width:900px){
+    .page{width:auto;min-height:auto;padding:22px 18px;margin:12px;}
+    .two-col{grid-template-columns:1fr;}
+    .person{grid-template-columns:1fr;}
+    .flow{flex-direction:column;}
+    .fstep + .fstep{margin-left:0;margin-top:8px;}
+    .fstep:not(:last-child)::after{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================ PAGE 1 ============================ -->
+<section class="page dense">
+  <div class="run-head">
+    <span>小影科技 · 2027 校招 · AI 产品经理笔试题</span>
+    <b>SHOTSCRIPT / 分镜稿</b>
+  </div>
+
+  <div class="kicker"><i></i>方向：AI 与内容创作</div>
+  <h1>分镜稿 <span style="font-size:17px;color:#9AA0B2;font-weight:500;letter-spacing:0">ShotScript</span></h1>
+  <p class="lead" style="font-size:14px;color:#4B4F61;margin-top:8px">
+    把一段口播文案，变成一条<strong>能逐段推翻</strong>的分镜稿——<br>
+    让剪辑从「40 分钟的体力活」，变成「5 次点选」。
+  </p>
+
+  <div class="meta-row">
+    <div>提交人<b>李洁</b></div>
+    <div>产品原型<b>网页 Demo（可免登录访问）</b></div>
+    <div>文档<b>本文 · 打印为 PDF 共 5 页</b></div>
+    <div>日期<b>2026.11.01</b></div>
+  </div>
+
+  <h2><span class="n">1</span>一句话概括 <small>用户 · 场景 · 方式 · 问题</small></h2>
+  <div class="oneline">
+    <span class="tag">ONE SENTENCE</span>
+    这是一个帮助<b>「每周要稳定更新 3 条口播、但只有晚上两小时」的副业知识博主</b>，在<b>「文案定稿、口播已录完、只剩剪辑」</b>的场景下，通过<b>把文案自动拆成一条可逐段替换的分镜时间轴、让人只做 3–5 次「换一个」的决策</b>，解决<b>「一条 60 秒视频要花 40 分钟对字幕、找空镜、调节奏」</b>的问题。
+  </div>
+  <p class="small" style="margin-top:8px">
+    不写「让创作更简单」。产品本身是：<strong>粘贴文案 → 拿到 6 段带画面和字幕的分镜 → 逐段替换或锁定 → 导出</strong>。
+  </p>
+
+  <h2><span class="n">2</span>用户场景 <small>具体到一个人和一个晚上</small></h2>
+
+  <h3>目标用户：林可，26 岁，杭州，SaaS 公司运营 / 副业做「职场沟通」账号</h3>
+  <div class="person">
+    <div class="pcard"><div class="pt">账号状态</div><div class="pv">小红书 + 抖音，1.8 万粉，选题稳定，已有商单询价</div></div>
+    <div class="pcard"><div class="pt">生产方式</div><div class="pv">手机拍口播，剪映 / 小影剪；每周 3 条 60 秒，一人包写拍剪发</div></div>
+    <div class="pcard"><div class="pt">可投入时间</div><div class="pv">工作日晚上 21:00–23:00，周末最多半天</div></div>
+    <div class="pcard wide">
+      <div class="pt">具体那一刻</div>
+      <div class="pv">周日 21:40，3 条口播素材已经拍完，人坐在书房的桌前，明早 8 点要上班。他要在 12 点前把 3 条都发出去——现在还剩「剪」这一件事。<br>
+      为什么不选另外两类人：腰部以上已有剪辑师，完全小白还没走到「卡产能」这一步。</div>
+    </div>
+  </div>
+
+  <h3>五个问题</h3>
+  <div class="qa">
+    <div class="row"><div class="q">他是谁</div><div class="a">不是为了做网红的内容创业者，而是<strong>有本职工作、把更新当副业的知识型博主</strong>（5000–5 万粉）：选题和表达已经成立，卡住他的是产能。</div></div>
+    <div class="row"><div class="q">什么时候用</div><div class="a">① 文案定稿、口播录完、当晚必须发；② 某条视频数据好，想用同一套节奏快速复刻一条。</div></div>
+    <div class="row"><div class="q">想完成什么</div><div class="a">拿到 3 条<strong>「能直接发」的初稿</strong>：字幕准确、画面有变化、节奏不拖，并且在两小时内发完。</div></div>
+    <div class="row"><div class="q">目前困难</div><div class="a">① 字幕要逐句对，错一个字就要找半天；② 一条 60 秒要 8–12 个空镜，<strong>找素材 + 摆放是最耗时的部分</strong>；③ 纯口播画面单调，观众 3 秒划走；④ 每次都从零剪，上次的经验无法复用。</div></div>
+    <div class="row"><div class="q">为什么值得解决</div><div class="a">「稳定更新」是账号增长里权重最高的变量，而剪辑是唯一卡住产能的环节。把它从 40 分钟压到 5 分钟，等于把「能不能周更三条」从运气变成习惯。这也在小影的主战场：不是替他创作，而是解除产能瓶颈。</div></div>
+  </div>
+
+  <div class="pno">01 / 05</div>
+</section>
+
+<!-- ============================ PAGE 2 ============================ -->
+<section class="page">
+  <div class="run-head">
+    <span>小影科技 · 2027 校招 · AI 产品经理笔试题</span>
+    <b>产品流程与界面</b>
+  </div>
+
+  <h2 style="margin-top:6px"><span class="n">3</span>产品流程 <small>Demo 里的五步，每步都有取舍</small></h2>
+
+  <div class="flow">
+    <div class="fstep"><div class="fi">STEP 01</div><div class="ft">进入</div><div class="fd">小影 App › AI 创作 › 分镜稿；网页端可直接粘贴</div></div>
+    <div class="fstep"><div class="fi">STEP 02</div><div class="ft">粘贴文案</div><div class="fd">3 个示例 + 自由输入；实时显示字数与预估秒数</div></div>
+    <div class="fstep"><div class="fi">STEP 03</div><div class="ft">生成</div><div class="fd">4 步可见进度，文案逐句被高亮消费，可取消</div></div>
+    <div class="fstep"><div class="fi">STEP 04</div><div class="ft">分镜工作台</div><div class="fd">左预览 + 右 6 张卡片；换一个 / 改字 / 锁定 / 删段</div></div>
+    <div class="fstep"><div class="fi">STEP 05</div><div class="ft">出口</div><div class="fd">成片 / SRT / 模板 / 发送到小影 App 精剪</div></div>
+  </div>
+
+  <h3>关键设计决策</h3>
+  <table>
+    <tr><th style="width:30%">决定</th><th>为什么</th></tr>
+    <tr><td class="k">从文案开始</td><td>用户脑子里先有「要说的话」，才有素材。如果入口是「上传素材」，他得先做一次整理，进入成本就翻倍。</td></tr>
+    <tr><td class="k">进度拆 4 步</td><td>20 秒的等待如果没有解释就是焦虑。把「拆句 / 字幕 / 空镜 / 配乐」摊开，用户知道卡在哪，也愿意等。</td></tr>
+    <tr><td class="k">卡片而非轨道</td><td>目标用户不是剪辑师，时间轴轨道对他是陌生语言。卡片让他读一句话、看一张图、点一次替换，全程不需要学新概念。</td></tr>
+    <tr><td class="k">只给 3 个候选</td><td>选择越多越难决定。3 个是「挑一个」，10 个就变成「逛素材库」，又把时间还回去了。</td></tr>
+    <tr><td class="k">显性化置信度</td><td>把 AI 不确定的地方标出来（低于 0.62 泛黄），用户知道哪几段必须看一眼，而不是等发出去才发现画面在讲另一件事。</td></tr>
+    <tr><td class="k">锁定 + 整体重排</td><td>满意的段落锁住，重排时自动跳过。让用户敢「局部满意」，不必因为一段不满意就推翻全稿。</td></tr>
+  </table>
+
+  <h2><span class="n">4</span>边界状态 <small>加载 / 失败 / 结果不理想 / 素材不足</small></h2>
+  <table>
+    <tr><th style="width:19%">状态</th><th style="width:43%">界面怎么做</th><th>为什么这样做</th></tr>
+    <tr><td class="k">加载</td><td>4 步进度 + 文案逐句高亮 + 剩余秒数 + 取消</td><td>把黑盒等待变成可解释的过程，取消权还给用户</td></tr>
+    <tr><td class="k">失败</td><td>明确写出「文案与字幕时间轴已保存」，再给三条出口：重试该步 / 字幕卡保底出片 / 返回改文案</td><td>错误页的价值不在报错，而在<strong>告诉用户手里还有什么</strong>；三条出口都指向「还能拿到东西」</td></tr>
+    <tr><td class="k">素材不足</td><td>弹窗让人做决定：降级字幕卡 / 上传自有素材 / 缩到 30 秒</td><td>AI 不硬填不确定的画面，宁可把判断交还给人，也不给「看起来完整但每段都要返工」的稿</td></tr>
+    <tr><td class="k">结果不理想</td><td>单段「换一个」3 选 1、锁定满意段、整体重排（跳过锁定段）</td><td>返工粒度必须是「一段」，而不是「一条」。这是可控性的最小单位</td></tr>
+  </table>
+
+  <h3>完成核心任务之后</h3>
+  <p>导出成片之后，工作台底部还留三件事：<strong>存为模板</strong>（镜头节奏 + 字幕样式）、<strong>套用到下周文案</strong>、<strong>收藏这 3 个空镜</strong>。理由是：一次微调的真正价值是「下次不用再微调」，这决定了用户会不会留下第二个星期。</p>
+
+  <div class="quote">
+    产品的一句话可以被复述，但用户的信任只能被细节挣到：<br>
+    失败时告诉他存了什么、素材不够时让他选、不满意时只让他改一段。
+    <span>PRODUCT BELIEF</span>
+  </div>
+
+  <div class="pno">02 / 05</div>
+</section>
+
+<!-- ============================ PAGE 3 ============================ -->
+<section class="page">
+  <div class="run-head">
+    <span>小影科技 · 2027 校招 · AI 产品经理笔试题</span>
+    <b>产品判断</b>
+  </div>
+
+  <h2 style="margin-top:6px"><span class="n">5</span>产品判断 <small>六问六答</small></h2>
+
+  <h3>① 为什么选这个用户和场景？</h3>
+  <p>因为它是一个<strong>产能问题，不是审美问题</strong>。审美类需求很难验证 AI 是否真的帮上忙；产能可以用分钟数直接衡量——同一条视频，剪辑从 40 分钟到 5 分钟，用户自己就能感知。而且这类用户的素材形态固定（口播 + 文案），AI 的发挥空间可控，不容易做成「看起来很酷但没人用」的东西。</p>
+
+  <h3>② 我认为最核心的问题是什么？</h3>
+  <p>不是「AI 会不会剪」，而是<strong>「用户不敢把整条视频交给 AI，也不愿意逐帧去改」</strong>。AI 产物越完整，一旦不合意，返工成本越高——所以「一键成片」看起来诱人，实际使用率很低。真正要解决的是：把 AI 的输出切成<strong>人能一眼看懂、能单点推翻的最小单位</strong>。</p>
+
+  <h3>③ 为什么采用现在这个流程？</h3>
+  <div class="judge">
+    <div class="j"><i>1</i><span>起点是文案：用户已有的资产直接成为输入，零整理成本。</span></div>
+    <div class="j"><i>2</i><span>中间是分镜：把「一整条视频」拆成 6 个可判断的小决定，每个决定只需要看一眼图、读一句话。</span></div>
+    <div class="j"><i>3</i><span>终点是多个出口：成片给急着发的人，SRT 和模板给想复用的人，发送到小影 App 给要深加工的人。</span></div>
+    <div class="j"><i>4</i><span>全程没有新概念：不需要理解时间轴、轨道、图层、关键帧。</span></div>
+  </div>
+
+  <h3>④ 我主动没有做哪些功能？为什么？</h3>
+  <div class="no-list">
+    <div class="no-item"><div class="n1">数字人口播</div><div class="n2">信任成本太高。这类博主的核心资产是「真人出镜的可信度」，用数字人等于自毁账号调性。</div></div>
+    <div class="no-item"><div class="n1">全网素材搜索</div><div class="n2">版权与成本都不可控。第一版只用站内素材库 + 用户自有素材，把风险关在门内。</div></div>
+    <div class="no-item"><div class="n1">精细调色 / 转场 / 关键帧</div><div class="n2">那是精剪，属于小影 App 的能力。这里做会摊薄主线，也打不过成熟剪辑器。</div></div>
+    <div class="no-item"><div class="n1">自动发布 / 多平台分发</div><div class="n2">那是运营中台的问题，会把产品从「创作工具」做成「发布系统」，主线失焦。</div></div>
+    <div class="no-item"><div class="n1">多人协作</div><div class="n2">副业单人场景不需要，加了只会增加权限与成本。</div></div>
+  </div>
+
+  <h3>⑤ 如果只能保留一个核心功能，保留什么？</h3>
+  <p><strong>「文案 → 分镜时间轴」这一步，含单段替换。</strong>因为后面所有价值（导出、字幕、模板、套用）都建立在这张「可推翻的稿」上；去掉它，剩下的每一项都是普通剪辑器已有的功能，产品就不存在了。</p>
+
+  <h3>⑥ 这个产品最可能失败的地方是什么？</h3>
+  <div class="riskbox">
+    <b>风险一（最大）：画面「像但不贴」。</b>语义匹配能找到同类场景，但找不到「正好在说这句话」的画面，用户仍要逐段换，省下的分钟数达不到预期。缓解：素材按语义分层打标 + 只给 3 个候选 + 记住用户每次的选择偏好；但这仍必须用真实数据验证，不能靠推测。
+  </div>
+  <div class="riskbox">
+    <b>风险二：用户其实想要「一键直接发」。</b>我们赌的是「可控性 &gt; 全自动」，但如果多数人只想要「生成完直接发」，这套卡片式流程就会被当成麻烦。验证方式：A/B 两种默认值——默认全自动、一键进入分镜稿 vs 默认分镜稿。
+  </div>
+  <div class="riskbox">
+    <b>风险三：单条生成的成本与时长撑不住免费额度。</b>如果一条要等 1 分钟、成本几毛钱，免费用户会把产品当玩具。应对：每日 3 条免费、720p 优先、按需升分辨率。
+  </div>
+
+  <div class="pno">03 / 05</div>
+</section>
+
+<!-- ============================ PAGE 4 ============================ -->
+<section class="page dense">
+  <div class="run-head">
+    <span>小影科技 · 2027 校招 · AI 产品经理笔试题</span>
+    <b>我最喜欢的产品 / AI 使用记录</b>
+  </div>
+
+  <h2 style="margin-top:6px"><span class="n">6</span>我最喜欢的一个功能 <small>剪映：字幕识别 + 文本联动编辑</small></h2>
+
+  <h3>它是什么 · 我在什么场景下用</h3>
+  <p>把口播视频识别成一句句文字，<strong>直接在文字上改错别字，画面里的字幕与时间码同步跟着变</strong>。我每周日晚剪口播都会用：60 秒视频识别出 30 多句字幕，里面有大量同音错字（在 / 再、的 / 地）。</p>
+
+  <h3>它具体解决了什么问题</h3>
+  <p>没有它时，改一个错字要在时间轴上找那一帧、选中字幕块、双击、改字、再拉回长度——平均一句 40 秒。有它之后，字幕校对像改一篇 Word，5 分钟过完。<strong>字幕从视频的下游产物，变成了可编辑的源数据。</strong></p>
+
+  <h3>哪一个设计让我觉得特别好</h3>
+  <div class="judge">
+    <div class="j"><i>1</i><span><strong>以「句子」为单位，而不是以「帧」为单位。</strong>用户思考的单位本来就是一句话，产品跟着用户的单位走。</span></div>
+    <div class="j"><i>2</i><span><strong>改字之后时间码自动重排。</strong>不需要用户去管「这句话变长了怎么办」，把最难的排版交给系统。</span></div>
+    <div class="j"><i>3</i><span><strong>可以批量替换同词错字。</strong>一次改掉 20 处，把重复劳动直接归零。</span></div>
+  </div>
+
+  <h3>为什么这个设计有效</h3>
+  <p>因为<strong>用户对文字的纠错能力，远强于对时间轴的操控能力</strong>。同一个修改动作，放在轨道上是「技术活」，放在文字上是「打字」。它把编辑对象从画面换成文字，把操作从拖拽换成打字，门槛直接掉到打字水平。这也是分镜稿直接借用的思路：<strong>文本即时间轴</strong>。</p>
+
+  <h3>如果只能改一个地方，我会改什么</h3>
+  <p>改完字幕，<strong>配音不会跟着变</strong>，还得重录那句。我会加「改字即重录该句（3 秒音色样本克隆）」，让文字成为唯一真源：改字 → 语音同步更新 → 时间码自动重排。</p>
+
+  <h2 style="margin-top:20px"><span class="n">7</span>AI 工具使用情况 <small>用了什么 · 我判断了什么</small></h2>
+
+  <h3>我用了哪些 AI 工具</h3>
+  <table>
+    <tr><th style="width:24%">工具</th><th>帮我完成了什么</th></tr>
+    <tr><td class="k">Claude / GPT</td><td>竞品功能盘点（剪映、CapCut、Opus Clip、Descript）、用户场景候选枚举、示例口播文案初稿、DEMO 页面代码与本文档骨架</td></tr>
+    <tr><td class="k">AI 编程 / 图像生成</td><td>把交互原型写成可点击的网页（状态机、时间轴、字幕编辑、SRT 导出）；生成演示用的 8 张竖版空镜素材</td></tr>
+  </table>
+
+  <h3>哪些是 AI 给的，哪些是我判断后改掉的</h3>
+  <div class="no-list">
+    <div class="no-item"><div class="n1">否掉「一键成片」</div><div class="n2">AI 首版以「输入文案 → 直接出成片」为主。我判断返工成本高于重做，用户不敢用，改成「可逐段推翻的分镜稿」作为主产物。</div></div>
+    <div class="no-item"><div class="n1">否掉数字人</div><div class="n2">AI 建议加「虚拟主播」以省去拍摄。我认为它会摧毁账号可信度，直接删除。</div></div>
+    <div class="no-item"><div class="n1">改掉入口与结果形态</div><div class="n2">AI 的流程是「先上传素材 → 选风格 → 生成」，结果给的是时间轴轨道 + 多图层编辑器。我改成「先粘贴文案」，结果改成卡片列表：目标用户不是剪辑师，轨道对他陌生。</div></div>
+    <div class="no-item"><div class="n1">补了边界路径</div><div class="n2">AI 只写了 happy path。我补了三条：生成失败、素材不足降级、结果不理想重排，并让它们在 Demo 里可点。</div></div>
+    <div class="no-item"><div class="n1">改口径与时长</div><div class="n2">把「让创作更简单」这种口号改成可量化的「40 分钟压到 5 分钟」；并修正 AI 的时长错误——它把 300 字塞进 9 段 60 秒，按 4.6 字/秒算不通。</div></div>
+  </div>
+
+  <h3>AI 输出中不符合预期的地方</h3>
+  <p>① 编造了不存在的量化数据（「效率提升 3 倍」）；② 把「空镜」和「B-roll」混用，对国内创作者不准确；③ 生成的示例文案偏书面，不像口播（改成了短句 + 口语连接）；④ 竞品盘点里把 Opus Clip 的能力说得过满。这些我都逐条核对后删改；其余部分——定位与取舍、边界与降级设计、文案脚本、Demo 交互与视觉——由我自己判断完成。</p>
+
+  <div class="pno">04 / 05</div>
+</section>
+
+<!-- ============================ PAGE 5 ============================ -->
+<section class="page">
+  <div class="run-head">
+    <span>小影科技 · 2027 校招 · AI 产品经理笔试题</span>
+    <b>提交材料与演示路径</b>
+  </div>
+
+  <h2 style="margin-top:6px"><span class="n">8</span>提交材料 <small>三项，均已附</small></h2>
+
+  <div class="two-col">
+    <div>
+      <h3 style="margin-top:0">1 · 产品说明文档</h3>
+      <p class="small">即本文档（≤ 5 页），可直接打印为 A4 PDF。<br>结构：一句话 → 用户场景 → 流程与边界 → 产品判断 → 最喜欢的产 品 → AI 使用记录。</p>
+
+      <h3>2 · 产品 Demo</h3>
+      <p class="small">可访问网页 Demo（单文件 <code style="font-size:10px;background:#F4F5F9;padding:1px 4px;border-radius:3px">index.html</code>，免登录）。<br>
+      也可以按题目要求补充 2–3 分钟录屏：<strong>粘贴示例 → 生成 → 换一个 → 改字幕 → 导出 SRT</strong>。</p>
+
+      <h3>3 · AI 使用记录</h3>
+      <p class="small">见第 4 页第 7 节，含工具、AI 完成的工作、我判断修改的部分、AI 不符合预期的地方。</p>
+    </div>
+
+    <div style="border-left:1px solid var(--line);padding-left:18px">
+      <h3 style="margin-top:0">Demo 演示路径（评审核对用）</h3>
+      <div class="qa" style="margin-top:2px">
+        <div class="row" style="grid-template-columns:20px 1fr"><div class="q">1</div><div class="a">点「示例 · 职场沟通」→ 文案自动填入，实时显示 280 字 / 60.9 秒。</div></div>
+        <div class="row" style="grid-template-columns:20px 1fr"><div class="q">2</div><div class="a">「生成分镜稿」→ 4 步进度 + 逐句高亮（模拟 20 秒等待）。</div></div>
+        <div class="row" style="grid-template-columns:20px 1fr"><div class="q">3</div><div class="a">进入工作台：左侧竖版预览、时间轴总览；右侧 6 张分镜卡。</div></div>
+        <div class="row" style="grid-template-columns:20px 1fr"><div class="q">4</div><div class="a">点某段的「换一个」→ 3 个候选画面，选一个即时替换并更新预览。</div></div>
+        <div class="row" style="grid-template-columns:20px 1fr"><div class="q">5</div><div class="a">直接点字幕改字 → 该段时长重算，总时长与时间轴同步更新。</div></div>
+        <div class="row" style="grid-template-columns:20px 1fr"><div class="q">6</div><div class="a">「锁定」一段 → 「整体重排」，锁定的段落保持不动。</div></div>
+        <div class="row" style="grid-template-columns:20px 1fr"><div class="q">7</div><div class="a">右上「评审演示」：生成失败 / 素材不足降级 / 结果不理想，三条边界路径。</div></div>
+        <div class="row" style="grid-template-columns:20px 1fr"><div class="q">8</div><div class="a">「导出成片」→ 四个出口；<strong>下载 .srt 是真实文件</strong>，可直接拖进小影 / 剪映。</div></div>
+      </div>
+    </div>
+  </div>
+
+  <h2 style="margin-top:22px"><span class="n">9</span>设计说明 <small>哪些是模拟，哪些是真的</small></h2>
+  <table>
+    <tr><th style="width:26%">部分</th><th>实现方式</th></tr>
+    <tr><td class="k">分镜拆句</td><td>真实规则实现：按标点断句 → 按目标时长分组 → 按 4.6 字/秒反推时间码。换文案/时长，结果真的会变。</td></tr>
+    <tr><td class="k">画面匹配</td><td>模拟：用固定素材池 + 打标（人物近景 / 空镜 / 特写 / 字幕卡），置信度为演示值。</td></tr>
+    <tr><td class="k">生成过程</td><td>模拟 4 步进度与耗时，用于展示「等待可解释」的设计。</td></tr>
+    <tr><td class="k">字幕导出</td><td>真实生成 .srt 文件（时间码由当前分镜计算），可下载使用。</td></tr>
+    <tr><td class="k">成片渲染</td><td>不渲染（题目不要求），导出动作只给出队列反馈与后续引导。</td></tr>
+  </table>
+
+  <div class="quote" style="margin-top:18px">
+    如果只能留下一句话，我希望评审记住的是：<br>
+    AI 不该替用户做完整条视频，它该替用户把那件最耗时的体力活做完，然后把判断权，一段一段地还回去。
+    <span>SHOTSCRIPT / 2026</span>
+  </div>
+
+  <div class="footline">
+    分镜稿 ShotScript · 小影科技 2027 校招 AI 产品经理笔试提交材料｜提交人：李洁｜2026.11.01<br>
+    本原型为交互演示，未接入真实 AI 模型；文档中数据与判断均为本人整理，未使用未经验证的生成结果。
+  </div>
+
+  <div class="pno">05 / 05</div>
+</section>
+
+</body>
+</html>
